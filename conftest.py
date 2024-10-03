@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 def pytest_addoption(parser):
-    parser.addoption('--language', action='store', default=None,
+    parser.addoption('--language', action='store', default='en',
                      help="Choose language")
 link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
 @pytest.fixture(scope="function")
