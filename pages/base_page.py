@@ -1,7 +1,11 @@
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 from pages.locators import LoginPageLocators
 import math
+
 
 class BasePage():
     def __init__(self, browser, url, timeout=10):
@@ -15,7 +19,7 @@ class BasePage():
     def is_element_present(self, how, what):
         try:
             self.browser.find_element(how, what)
-        except (NoSuchElementException):
+        except NoSuchElementException:
             return False
         return True
 
@@ -36,3 +40,27 @@ class BasePage():
     def add_item_to_cart(self):
         item = self.browser.find_element(*LoginPageLocators.ADD_TO_CART)
         item.click()
+
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
+        return True
+
+    def is_not_element_present(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+        return False
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*LoginPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+    def should_dissapear_of_success_message(self):
+        assert self.is_disappeared(*LoginPageLocators.SUCCESS_MESSAGE, 4), \
+            "A successful message does not disappear"
