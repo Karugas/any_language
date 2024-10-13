@@ -6,3 +6,7 @@ class LoginPageLocators():
     REGISTER_FORM = (By.XPATH, '//form[@id="register_form"]')
     ADD_TO_CART = (By.XPATH, '//button[@value="Добавить в корзину"]')
     SUCCESS_MESSAGE = (By.XPATH, "//div[@class='alertinner ']")
+
+class BasePageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")

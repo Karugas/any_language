@@ -4,6 +4,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.locators import LoginPageLocators
+from pages.locators import BasePageLocators
 import math
 
 
@@ -64,3 +65,10 @@ class BasePage():
     def should_dissapear_of_success_message(self):
         assert self.is_disappeared(*LoginPageLocators.SUCCESS_MESSAGE, 4), \
             "A successful message does not disappear"
+
+    def go_to_login_page(self):
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK_INVALID)
+        link.click()
+
+    def should_be_login_link(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
