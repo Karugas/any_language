@@ -1,6 +1,9 @@
 import time
 from pages.base_page import BasePage
+from pages.basket_page import BasketPage
 from pages.product_page import ProductPage
+from pages.main_page import MainPage
+import pytest
 
 
 def test_guest_can_add_product_to_basket(browser):
@@ -45,3 +48,14 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page = ProductPage(browser,link)
     page.open()
     page.should_be_login_link()
+
+
+@pytest.mark.new
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/"
+    page = MainPage(browser, link)
+    page.open()
+    time.sleep(3)
+    page.guest_clik_button_see_basket()
+    basket_page = BasketPage(browser, link)
+    basket_page.check_empty_cart()
