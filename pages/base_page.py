@@ -76,3 +76,7 @@ class BasePage():
     def guest_clik_button_see_basket(self):
         link = self.browser.find_element(*BasePageLocators.CART_IN_HEAD)
         link.click()
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
