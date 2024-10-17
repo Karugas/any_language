@@ -66,7 +66,7 @@ class BasePage():
         assert self.is_disappeared(*LoginPageLocators.SUCCESS_MESSAGE, 4), \
             "A successful message does not disappear"
 
-    def go_to_login_page(self):
+    def go_to_login_page(self) -> object:
         link = self.browser.find_element(*BasePageLocators.LOGIN_LINK_INVALID)
         link.click()
 
